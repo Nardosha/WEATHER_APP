@@ -450,15 +450,6 @@ body {
 .tabs__content .tabs__block {
   display: none;
 }
-.tabs__content .tabs__block:nth-child(1) {
-  background: lightblue;
-}
-.tabs__content .tabs__block:nth-child(2) {
-  background: lightgreen;
-}
-.tabs__content .tabs__block:nth-child(3) {
-  background: lightcoral;
-}
 .tabs ._active {
   display: block;
 }
