@@ -12,20 +12,29 @@
 		      <div class="search-block__container">
 			      <form action="#" class="search-block__form">
 				      <input type="text" class="search-block__input" placeholder="Aktobe">
-				      <button class="search-block__button"></button>
+				      <button type='submit' class="search-block__button"></button>
 			      </form>
 		      </div>
 	       </section>
 	        <section class="page__bottom content-block">
 		        <div class="content-block content-column">
-			        <div class="content-column__container">
-				        <div class="content-column__content"></div>
-				        <div class="content-column__buttons">
-					        <div class="content-column__button-now">Now</div>
-					        <div class="content-column__button-details">Details</div>
-					        <div class="content-column__button-forecast">Forecast</div>
-				
+			        <div class="content-column__container tabs">
+				        <div class="tabs__content">
+					        <div class="tabs__block _active" id="tab_now">
+						       <p>tab_now</p>
+					        </div>
+					        <div class="tabs__block" id="tab_details">
+						        <p>tab_details</p>
+					        </div>
+					        <div class="tabs__block" id="tab_forecast">
+						        <p>tab_forecast</p>
+					        </div>
 				        </div>
+				        <nav class="tabs__items">
+					        <a href="#tab_now" data-tab="now" class="tabs__item item-now _active">Now</a>
+					        <a href="#tab_details" data-tab="details" class="tabs__item item-details">Details</a>
+					        <a href="#tab_forecast" data-tab="forecast" class="tabs__item item-forecast">Forecast</a>
+				        </nav>
 			        </div>
 		        </div>
 		        <div class="content-block location-column">
@@ -53,6 +62,7 @@
 	       
         </div>
       </div>
+		<script src="modules/api.js"></script>
       <script src="modules/view.js"></script>
 	</body>
 </html>
