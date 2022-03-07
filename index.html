@@ -2,67 +2,74 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-      <link rel="stylesheet" href="styles/main.css">
-		<title>Title</title>
+		<link href="styles/main.css" rel="stylesheet">
+		<title>Weather App</title>
 	</head>
 	<body>
-      <div class="wrapper">
-        <div class="page _container">
-	        <section class="page__top search-block">
-		      <div class="search-block__container">
-			      <form action="#" class="search-block__form">
-				      <input type="text" class="search-block__input" placeholder="Aktobe">
-				      <button type='submit' class="search-block__button"></button>
-			      </form>
-		      </div>
-	       </section>
-	        <section class="page__bottom content-block">
-		        <div class="content-block content-column">
-			        <div class="content-column__container tabs">
-				        <div class="tabs__content">
-					        <div class="tabs__block _active" id="tab_now">
-						       <p>tab_now</p>
-					        </div>
-					        <div class="tabs__block" id="tab_details">
-						        <p>tab_details</p>
-					        </div>
-					        <div class="tabs__block" id="tab_forecast">
-						        <p>tab_forecast</p>
-					        </div>
-				        </div>
-				        <nav class="tabs__items">
-					        <a href="#tab_now" data-tab="now" class="tabs__item item-now _active">Now</a>
-					        <a href="#tab_details" data-tab="details" class="tabs__item item-details">Details</a>
-					        <a href="#tab_forecast" data-tab="forecast" class="tabs__item item-forecast">Forecast</a>
-				        </nav>
-			        </div>
-		        </div>
-		        <div class="content-block location-column">
-				        <div class="location-column__title-block">
-					        <h2 class="location-column__title-text">Added Locations:</h2>
-				        </div>
-				        <div class="location-column__locations-block locations-block ">
-					        <ul class="locations-block__list">
-						        <li class="locations-block__item">
-							        Amur
-						        </li>
-						        <li class="locations-block__item">
-							        Amur
-						        </li>
-						        <li class="locations-block__item">
-							        Amur
-						        </li>
-						        <li class="locations-block__item">
-							        Amur
-						        </li>
-					        </ul>
-				        </div>
-		        </div>
-	        </section>
-	       
-        </div>
-      </div>
-		<script src="modules/api.js"></script>
-      <script src="modules/view.js"></script>
+		<div class="wrapper">
+			<div class="page _container">
+				<section class="page__top search-block">
+					<div class="search-block__container">
+						<form action="#" class="search-block__form">
+							<input class="search-block__input" placeholder="Aktobe" type="text">
+							<button class="search-block__button" type="submit"></button>
+						</form>
+					</div>
+				</section>
+				<section class="page__bottom content-block">
+					<div class="content-block content-column">
+						<div class="content-column__container tabs">
+							<div class="tabs__content">
+								<div class="tabs__block _active" id="tab_now">
+									<div class="tab-now">
+										<div class="tab-now_temp">Temp</div>
+										<div class="tab-now_icon"></div>
+										<div class="tab-now_city">
+											<div class="tab-now_city-name">SPB</div>
+											<div class="tab-now_save"></div>
+										</div>
+									</div>
+								
+								</div>
+								<div class="tabs__block tab-details" id="tab_details">
+									<p class="tab-details_temp">Weather information</p>
+								</div>
+								<div class="tabs__block" id="tab_forecast">
+									<p class="tab-details_temp">Weather on week</p>
+								</div>
+							</div>
+							<nav class="tabs__items">
+								<a class="tabs__item item-now _active" data-tab="now" href="#tab_now">Now</a>
+								<a class="tabs__item item-details" data-tab="details" href="#tab_details">Details</a>
+								<a class="tabs__item item-forecast" data-tab="forecast"
+								   href="#tab_forecast">Forecast</a>
+							</nav>
+						</div>
+					</div>
+					<div class="content-block location-column">
+						<div class="location-column__title-block">
+							<h2 class="location-column__title-text">Added Locations:</h2>
+						</div>
+						<div class="location-column__locations-block locations-block ">
+							<ul class="locations-block__list">
+								<li class="locations-block__item">
+									Amur
+								</li>
+								<li class="locations-block__item">
+									Amur
+								</li>
+								<li class="locations-block__item">
+									Amur
+								</li>
+								<li class="locations-block__item">
+									Amur
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<script src="main.js" type="module"></script>
 	</body>
 </html>

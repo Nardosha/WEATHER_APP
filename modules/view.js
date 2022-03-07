@@ -1,7 +1,7 @@
+'use strict'
+
 const tabContainer = document.querySelector('.tabs__items')
 const tabBlockContainer = document.querySelector('.tabs__content')
-
-tabContainer.addEventListener('click', toggleTab)
 
 function toggleTab(e) {
     e.preventDefault()
@@ -23,8 +23,12 @@ function toggleTab(e) {
                 tabBlock.classList.remove('_active')
             }
         })
-
         currentTab.classList.toggle('_active')
         currentTabBlock.classList.toggle('_active')
     }
+}
+
+export {
+    tabContainer,
+    toggleTab,
 }
