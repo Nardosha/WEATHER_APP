@@ -11,36 +11,37 @@
 	        <section class="page__top search-block">
 		      <div class="search-block__container">
 			      <form action="#" class="search-block__form">
-				      <input type="text" class="search-block__input">
-				      <button class="search-block__button"></button>
+				      <input type="text" class="search-block__input" placeholder="Aktobe">
+				      <button class="search-block__button">Search</button>
 			      </form>
 		      </div>
 	       </section>
-	        <section class="page__left content-block">
-		        <div class="content-block__container">
-			        <div class="content-block__content"></div>
-			        <div class="content-block__buttons">
-				        <button class="content-block__button-now">Now</button>
-				        <button class="content-block__button-details">Details</button>
-				        <button class="content-block__button-forecast">Forecast</button>
-				        
+	        <section class="page__bottom content-block">
+		        <div class="content-block content-column">
+			        <div class="content-column__container">
+				        <div class="content-column__content"></div>
+				        <div class="content-column__buttons">
+					        <div class="content-column__button-now">Now</div>
+					        <div class="content-column__button-details">Details</div>
+					        <div class="content-column__button-forecast">Forecast</div>
+				
+				        </div>
 			        </div>
 		        </div>
-	        </section>
-	        <section class="page__right location-block">
-		        <div class="location-block__container">
-			       <div class="location-block__title_container">
-				       <h2 class="location-block__title-text">Added Location</h2>
-			       </div>
-			        <div class="location-block__container locations">
-				        <ul class="locations__list">
-					        <li class="locations__item">
-						        Amur
-					        </li>
-				        </ul>
-			        </div>
+		        <div class="content-block location-column">
+				        <div class="location-column__title-block">
+					        <h2 class="location-column__title-text">Added Location</h2>
+				        </div>
+				        <div class="location-column__locations-block locations-block ">
+					        <ul class="locations-block__list">
+						        <li class="locations-block__item">
+							        Amur
+						        </li>
+					        </ul>
+				        </div>
 		        </div>
 	        </section>
+	       
         </div>
       </div>
       <script src="modules/view.js"></script>
