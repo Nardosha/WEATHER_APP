@@ -449,8 +449,54 @@ body {
 }
 .tabs__content .tabs__block {
   display: none;
+  height: 100%;
 }
-.tabs ._active {
+.tabs__content .tab-now {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.tabs__content .tab-now_temp {
+  padding: 20px 23px;
+  line-height: 117.1428571429%;
+  text-align: left;
+  font-size: 70px;
+  margin: 0 0 15px 0;
+}
+.tabs__content .tab-now_icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background-position: center;
+  background-size: contain;
+}
+.tabs__content .tab-now_city {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 26px 12px 12px;
+  position: relative;
+}
+.tabs__content .tab-now_city .tab-now_city-name {
+  font-size: 24px;
+  line-height: 116.6666666667%;
+}
+.tabs__content .tab-now_city .tab-now_save {
+  background: url(../assets/content-block-now/save-icon.svg) no-repeat;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  width: 25px;
+  height: 25px;
+  margin: 0 26px 0 0;
+  cursor: pointer;
+}
+.tabs__content ._active {
   display: block;
 }
 .tabs__items {

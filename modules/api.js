@@ -1,18 +1,14 @@
 'use strict';
+
 const searchForm = document.querySelector('.search-block__form')
+const tabNowTemp = document.querySelector('.tab-now_temp')
+const tabNowIcon = document.querySelector('.tab-now_icon')
+const tabNowCity = document.querySelector('.tab-now_city-name')
+
 const serverUrl = 'http://api.openweathermap.org/data/2.5/weather'
 const apiKey = 'f660a2fb1e4bad108d6160b7f58c555f'
+
 // const serverUrl = 'http://api.openweathermap.org/data/2.5/weather?q=boston&appid=f660a2fb1e4bad108d6160b7f58c555f'
-
-searchForm.onsubmit = function(e) {
-    e.preventDefault()
-    const cityName = document.querySelector('.search-block__input').value
-
-    getUrl(cityName)
-        .then(weatherData => showWeather(weatherData))
-        .catch(err => alert(err))
-}
-
 
 function getUrl(city) {
     console.log(city)
@@ -24,25 +20,27 @@ function sendRequest(url) {
     console.log(url)
     return fetch(url)
         .then(response => response.json())
-
 }
 
 function showWeather(data) {
-    const tab = document.getElementById('tab_now')
     const city = data.name
-
-    const icon = document.createElement('img')
     const iconCode = data['weather'][0].icon
-    icon.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`
-
     const weatherKelvin = data['main']['temp']
     const temp = tempConvert(weatherKelvin)
-    tab.innerHTML = `${temp}&deg;C <br> ${city}`
-    tab.append(icon)
+
+    tabNowTemp.innerHTML = `${temp}&deg;C`
+    tabNowIcon.style.background = `url('http://openweathermap.org/img/wn/${iconCode}@2x.png') center center /contain no-repeat`
+    tabNowCity.innerHTML = `${city}`
 }
 
 function tempConvert(temp) {
     const Kelvin = 273.15
     return Math.round(temp - Kelvin)
 }
-// C = K - 273.15
+
+export {
+    searchForm,
+    getUrl,
+    showWeather,
+
+}
