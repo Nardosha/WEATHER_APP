@@ -5,7 +5,7 @@ const tabNowTemp = document.querySelector('.tab-now_temp')
 const tabNowIcon = document.querySelector('.tab-now_icon')
 const tabNowCity = document.querySelector('.tab-now_city-name')
 
-const serverUrl = 'http://api.openweathermap.org/data/2.5/weather'
+const serverUrl = 'https://api.openweathermap.org/data/2.5/weather'
 const apiKey = 'f660a2fb1e4bad108d6160b7f58c555f'
 
 // const serverUrl = 'http://api.openweathermap.org/data/2.5/weather?q=boston&appid=f660a2fb1e4bad108d6160b7f58c555f'
@@ -29,7 +29,7 @@ function showWeather(data) {
     const temp = tempConvert(weatherKelvin)
 
     tabNowTemp.innerHTML = `${temp}&deg;C`
-    tabNowIcon.style.background = `url('http://openweathermap.org/img/wn/${iconCode}@2x.png') center center /contain no-repeat`
+    tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${iconCode}@2x.png') center center /contain no-repeat`
     tabNowCity.innerHTML = `${city}`
 }
 
