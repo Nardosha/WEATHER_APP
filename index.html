@@ -18,14 +18,23 @@
 	       </section>
 	        <section class="page__bottom content-block">
 		        <div class="content-block content-column">
-			        <div class="content-column__container">
-				        <div class="content-column__content"></div>
-				        <div class="content-column__buttons">
-					        <div class="content-column__button-now">Now</div>
-					        <div class="content-column__button-details">Details</div>
-					        <div class="content-column__button-forecast">Forecast</div>
-				
+			        <div class="content-column__container tabs">
+				        <div class="tabs__content">
+					        <div class="tabs__block" id="tab_now">
+						       <p>tab_now</p>
+					        </div>
+					        <div class="tabs__block" id="tab_details">
+						        <p>tab_details</p>
+					        </div>
+					        <div class="tabs__block" id="tab_forecast">
+						        <p>tab_forecast</p>
+					        </div>
 				        </div>
+				        <nav class="tabs__items">
+					        <a href="#tab_now" class="tabs__item-now _active">Now</a>
+					        <a href="#tab_details" class="tabs__item-details">Details</a>
+					        <a href="#tab_forecast" class="tabs__item-forecast">Forecast</a>
+				        </nav>
 			        </div>
 		        </div>
 		        <div class="content-block location-column">

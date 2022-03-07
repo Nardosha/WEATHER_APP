@@ -380,7 +380,9 @@ body {
 }
 
 .wrapper {
+  position: relative;
   min-height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -388,13 +390,13 @@ body {
 }
 
 ._container {
-  min-width: 600px;
-  max-width: 600px;
   min-height: 435px;
-  margin: 10px;
 }
 
 .page {
+  width: 100%;
+  max-width: 600px;
+  margin: 5px;
   display: grid;
   grid-template-rows: 45px auto;
   border: 1px solid #000;
@@ -441,34 +443,58 @@ body {
   grid-template-rows: 1fr 45px;
   border-right: 1px solid #000;
 }
-.content-block .content-column__content {
+
+.tabs__content {
   height: 100%;
 }
-.content-block .content-column__buttons {
+.tabs__content .tabs__block {
+  display: none;
+}
+.tabs__content .tabs__block:nth-child(1) {
+  background: lightblue;
+}
+.tabs__content .tabs__block:nth-child(2) {
+  background: lightgreen;
+}
+.tabs__content .tabs__block:nth-child(3) {
+  background: lightcoral;
+}
+.tabs__content .tabs__block:target {
+  display: block;
+}
+.tabs__items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 45px;
   border-top: 1px solid #000;
 }
-.content-block .content-column__buttons .content-column__button-now,
-.content-block .content-column__buttons .content-column__button-details,
-.content-block .content-column__buttons .content-column__button-forecast {
+.tabs__items .tabs__item-now,
+.tabs__items .tabs__item-details,
+.tabs__items .tabs__item-forecast {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 11px;
+  cursor: pointer;
+  color: inherit;
+  transition: all 0.5s ease-in-out;
 }
-.content-block .content-column__buttons .content-column__button-now {
+.tabs__items .tabs__item-now {
   border-right: 1px solid #000;
 }
-.content-block .content-column__buttons .content-column__button-details {
+.tabs__items .tabs__item-details {
   border-right: 1px solid #000;
 }
-.content-block .location-column {
+.tabs__items ._active {
+  background: #000;
+  color: #fff;
+}
+
+.location-column {
   display: grid;
   grid-template-rows: 68px 1fr;
 }
-.content-block .location-column__title-block {
+.location-column__title-block {
   border-bottom: 1px solid #000;
   display: flex;
   flex-direction: column;
@@ -476,12 +502,12 @@ body {
   justify-content: flex-end;
   padding: 7px 18px 7px 18px;
 }
-.content-block .location-column__title-text {
+.location-column__title-text {
   font-size: 24px;
   line-height: 117.2083333333%;
   font-weight: inherit;
 }
-.content-block .location-column__locations-block {
+.location-column__locations-block {
   padding: 10px 5px 10px 18px;
 }
 
