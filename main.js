@@ -1,4 +1,4 @@
-import {getUrl, searchForm, showWeather} from "./modules/api.js";
+import {getUrl, searchForm, showWeather,} from "./modules/api.js";
 import {tabContainer, toggleTab} from "./modules/view.js";
 
 // Switch tabs
@@ -14,8 +14,20 @@ searchForm.onsubmit = function (e) {
         return
     }
     const cityName = inputValue.replace(/-/g, ' ')
+    const url = getUrl(cityName)
 
-    getUrl(cityName)
-        .then(weatherData => showWeather(weatherData))
-        .catch(err => alert(err))
+    fetch(url)
+        .then(response => response.json())
+        .then(response => new Promise((res, rej) => {
+            if (response.cod >= 400) {
+                rej(alert(`Status 404. City not found!`))
+            }
+            res(showWeather(response))
+        }))
+        .catch(err => {
+            if (err.name === 'TypeError') {
+                console.log(err)
+                alert('Error! Try again later!')
+            }
+        })
 }
