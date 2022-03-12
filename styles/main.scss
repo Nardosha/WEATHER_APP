@@ -1,0 +1,261 @@
+@import 'Normalize';
+@import 'nullstyles';
+
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: calc(21.09 / 18 * 100%);
+  font-weight: 400;
+  color: #000;
+}
+
+.wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+._container {
+  //min-width: 425px;
+  //max-width: 600px;
+  min-height: 435px;
+}
+
+.page {
+  width: 100%;
+  max-width: 600px;
+  margin: 5px;
+  display: grid;
+  grid-template-rows: 45px auto;
+  border: 1px solid #000;
+
+  &__top {
+    border-bottom: 1px solid #000;
+  }
+
+  &__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+.search-block {
+
+  &__container {
+    height: 100%;
+  }
+
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    height: 100%;
+    outline: none;
+
+  }
+
+  &__button {
+    background: url(../assets/search-block/search-icon.svg) center no-repeat;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 0;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    margin: 0 10px 0 0;
+  }
+}
+
+.content-block {
+
+  .content-column {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 45px;
+    border-right: 1px solid #000;
+  }
+}
+
+.tabs {
+  &__content {
+    height: 100%;
+
+    .tabs__block {
+      display: none;
+      height: 100%;
+
+      &:nth-child(1) {
+      }
+
+      &:nth-child(2) {
+
+      }
+
+      &:nth-child(3) {
+
+      }
+    }
+
+    .tab-now {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .tab-now_temp {
+      padding: 20px 23px;
+      line-height: calc(82 / 70 * 100%);
+      text-align: left;
+      font-size: 70px;
+      margin: 0 0 15px 0;
+    }
+
+    .tab-now_icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background-position: center;
+      background-size: contain;
+    }
+
+    .tab-now_city {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 26px 12px 12px;
+      position: relative;
+
+      .tab-now_city-name {
+        font-size: 24px;
+        line-height: calc(28 / 24 * 100%);
+      }
+
+      .tab-now_save {
+        cursor: pointer;
+
+        svg {
+          transition: all 0.3s ease-in-out;
+
+        }
+
+        svg:hover {
+          fill: black;
+          opacity: 1;
+        }
+      }
+    }
+
+    #tab-details {
+
+    }
+
+    #tab_forecast {
+
+    }
+
+
+    ._active {
+      display: block;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 45px;
+    border-top: 1px solid #000;
+
+
+    .tabs__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px;
+      cursor: pointer;
+      color: inherit;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .item-now {
+      border-right: 1px solid #000;
+    }
+
+    .item-details {
+      border-right: 1px solid #000;
+    }
+
+    .item-forecast {
+    }
+
+    ._active {
+      background: #000;
+      color: #fff;
+    }
+  }
+}
+
+
+.location-column {
+  display: grid;
+  grid-template-rows: 68px 1fr;
+
+  &__title-block {
+    border-bottom: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 7px 18px 7px 18px;
+  }
+
+  &__title-text {
+    font-size: 24px;
+    line-height: calc(28.13 / 24 * 100%);
+    font-weight: inherit;
+  }
+
+  &__locations-block {
+    padding: 10px 5px 10px 18px;
+
+
+  }
+
+}
+
+
+.locations-block {
+  display: flex;
+  align-items: center;
+
+  &__list {
+
+  }
+
+  &__item {
+    font-size: 24px;
+    line-height: calc(28 / 24 * 100%);
+    font-weight: inherit;
+
+    &:not(:last-child) {
+      margin: 0 0 12px 0;
+    }
+  }
+}

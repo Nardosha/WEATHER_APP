@@ -486,15 +486,14 @@ body {
   line-height: 116.6666666667%;
 }
 .tabs__content .tab-now_city .tab-now_save {
-  background: url(../assets/content-block-now/save-icon.svg) no-repeat;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translate(0, -50%);
-  width: 25px;
-  height: 25px;
-  margin: 0 26px 0 0;
   cursor: pointer;
+}
+.tabs__content .tab-now_city .tab-now_save svg {
+  transition: all 0.3s ease-in-out;
+}
+.tabs__content .tab-now_city .tab-now_save svg:hover {
+  fill: black;
+  opacity: 1;
 }
 .tabs__content ._active {
   display: block;
