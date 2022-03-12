@@ -1,21 +1,11 @@
+import {showWeather} from "./view.js";
+
 const searchForm = document.querySelector('.search-block__form')
-const tabNowTemp = document.querySelector('.tab-now_temp')
-const tabNowIcon = document.querySelector('.tab-now_icon')
-const tabNowCity = document.querySelector('.tab-now_city-name')
-const tabDetailsInfo = document.querySelector('.tab-details_info')
 
 
-// const serverUrl = 'http://api.openweathermap.org/data/2.5/weather?q=boston&appid=f660a2fb1e4bad108d6160b7f58c555f'
-
-getDefaultCityWeather()
-
-function getDefaultCityWeather() {
-    const defaultCity = 'Saint Petersburg'
-    const defUrl = getUrl(defaultCity)
-    getWeather(defUrl)
-}
 
 function getWeather(url) {
+    console.log('Load weather')
     fetch(url)
         .then(response => response.json())
         .then(response => {
@@ -40,58 +30,11 @@ function getUrl(city) {
     return `${serverUrl}?q=${city}&appid=${apiKey}`
 }
 
-function showWeather(data) {
-    const weatherData = createObj(data);
-
-    // NOW
-    tabNowCity.innerHTML = `${weatherData.City}`
-    tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
-    tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${weatherData.iconWeather}@2x.png') center center /contain no-repeat`
-
-    // DETAILS
-    // const detailsCity = document.querySelector('.tab-details_info-city')
-    // const detailsTemp = document.querySelector('.tab-details_info-temp')
-    // const detailsFeels = document.querySelector('.tab-details_info-feels')
-    // const detailsWeather = document.querySelector('.tab-details_info-weather')
-    // const detailsSunrise = document.querySelector('.tab-details_info-sunrise')
-    // const detailsSunset = document.querySelector('.tab-details_info-sunset')
-    // detailsCity.innerHTML = `${weatherData.city}`
-    // detailsTemp.innerHTML = `Temperature: ${weatherData.temp}&deg;`
-    // detailsFeels.innerHTML = `Feels like: ${weatherData["Feels like"]}&deg;`
-    // detailsWeather.innerHTML = `Weather: ${weatherData.Weather}`
-    // detailsSunrise.innerHTML = `Sunrise: ${weatherData.Sunrise}`
-    // detailsSunset.innerHTML = `Sunset: ${weatherData.Sunset}`
-
-    const ulDetailsInfo = Array.from(tabDetailsInfo.children)
-    const weatherDataObject = Object.entries(weatherData)
-    ulDetailsInfo.forEach(li => {
-        weatherDataObject.map(obj => {
-            if (li.dataset.details === obj[0]) {
-                if (li.dataset.details === 'City') {
-                    li.innerHTML = `${obj[1]}`
-                }
-                if (li.dataset.details === 'Temperature' || li.dataset.details === 'Feels like') {
-                    li.innerHTML = `${obj[0]}: ${obj[1]}&deg;`
-                } else {
-                    li.innerHTML = `${obj[0]}: ${obj[1]}`
-                }
-            }
-        })
-    })
-}
-
 function createObj(cityName) {
-    // temp
     const tempCelc = tempConvert(cityName.main?.temp)
     const feelsCelc = tempConvert(cityName.main?.feels_like)
-    // sunrise
-    const sunriseUnix = cityName.sys?.sunrise
-    const sunriseDate = new Date(sunriseUnix * 1000)
-    const sunrise = `${sunriseDate.getHours()}:${sunriseDate.getMinutes()}`
-    // sunset
-    const sunsetUnix = cityName.sys?.sunset
-    const sunsetDate = new Date(sunsetUnix * 1000)
-    const sunset = `${sunsetDate.getHours()}:${sunsetDate.getMinutes()}`
+    const sunrise = convertDate(cityName.sys?.sunrise)
+    const sunset = convertDate(cityName.sys?.sunset)
 
     return {
         'City': cityName.name,
@@ -104,6 +47,11 @@ function createObj(cityName) {
     }
 }
 
+function convertDate(date) {
+    const dateUnix = new Date(date * 1000)
+    return `${dateUnix.getHours()}:${dateUnix.getMinutes()}`
+}
+
 function tempConvert(tempKelvin) {
     const Kelvin = 273.15
     return Math.round(tempKelvin - Kelvin)
@@ -112,6 +60,6 @@ function tempConvert(tempKelvin) {
 export {
     searchForm,
     getUrl,
-    showWeather,
     getWeather,
+    createObj,
 }

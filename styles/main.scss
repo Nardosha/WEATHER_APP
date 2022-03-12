@@ -153,13 +153,18 @@ body {
 
         svg {
           transition: all 0.3s ease-in-out;
-
         }
-
         svg:hover {
+          opacity: 1;
+        }
+      }
+      .tab-now_save._active {
+        svg {
           fill: black;
           opacity: 1;
         }
+
+
       }
     }
 
@@ -253,9 +258,59 @@ body {
     font-size: 24px;
     line-height: calc(28 / 24 * 100%);
     font-weight: inherit;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    //transition: all 0.5s ease-in-out;
 
     &:not(:last-child) {
       margin: 0 0 12px 0;
     }
+
+    &-city {
+      color: red;
+      transition: color 0.3s ease-in-out;
+      padding: 0 5px 0 0;
+
+    }
+    &-btn {
+      position: relative;
+      width: 30px;
+      height: 20px;
+      transform: scale(0);
+      transition: all 0.1s ease-in-out;
+      padding: 0 10px 0 10px;
+    }
+
+    &-btn::before,
+    &-btn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      background-color: #000;
+      width: 20px;
+      height: 3px;
+      border-radius: 10px;
+    }
+    &-btn::before {
+      transform: rotate(45deg);
+    }
+    &-btn::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  .locations-block__item:hover {
+    .locations-block__item-city {
+      color: black;
+    }
+    .locations-block__item-btn {
+      transform: scale(1);
+    }
+  }
+  #hide {
+    display: none;
   }
 }
