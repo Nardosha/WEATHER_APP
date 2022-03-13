@@ -65,22 +65,57 @@ function showWeather(data) {
     toggleSaveBtn(cityIsSaved)
 }
 
-function handlerSavingCity(city) {
-    let cityName = city ? city : saveBtn.previousElementSibling.innerHTML
+// function handlerSavingCity(city) {
+//     let cityName = city ? city : saveBtn.previousElementSibling.innerHTML
+//     const cityIsSaved = checkCity(cityName);
+//
+//     if (!city) {
+//         toggleSaveBtn(!cityIsSaved)
+//     }
+//
+//     cityIsSaved
+//         ? removeCityItem(cityName)
+//         : createCityItem(cityName)
+// }
+
+function handlerSavingCity(city, action) {
+    const currentCity = saveBtn.previousElementSibling.innerHTML
+    let cityName = city ? city : currentCity
+
+    // Проверяем наличие города в списке
     const cityIsSaved = checkCity(cityName);
 
-    if (!city) {
-        toggleSaveBtn(!cityIsSaved)
+    // Проверяем открыт ли тот город, который хотим удалить из списка
+    if (cityName !== currentCity) {
+        removeCityItem(cityName)
+        return
     }
+    // Переключаем кнопку
+    toggleSaveBtn(!cityIsSaved)
 
+    // Удаляем/сохраняем город в соответствии с cityIsSaved
     cityIsSaved
         ? removeCityItem(cityName)
         : createCityItem(cityName)
 }
 
-function toggleSaveBtn(isSaved) {
-    console.log('SaveBtn active', isSaved)
-    isSaved ? saveBtn.classList.add('_active') : saveBtn.classList.remove('_active')
+function toggleSaveBtn(cityIsSaved) {
+    console.log('SaveBtn. CityIsSaved:', cityIsSaved)
+    if (cityIsSaved) {
+        saveBtn.classList.add('_active')
+    } else {
+        saveBtn.classList.remove('_active')
+    }
+    console.log('SaveBtn. Active', cityIsSaved)
+}
+
+function checkCity(cityName) {
+    if (document.getElementById(`${cityName}`)) {
+        console.log('Checking. City is saved', true)
+        return true
+    }
+    console.log('Checking. City is not saved', false)
+    return false
 }
 
 function removeCityItem(cityName) {
@@ -95,15 +130,6 @@ function createCityItem(city) {
     currentCity.querySelector('.locations-block__item-city').textContent = city
     cityList.append(currentCity)
     console.log(currentCity)
-}
-
-function checkCity(cityName) {
-    if (document.getElementById(`${cityName}`)) {
-        console.log('Checking. City is saved', true)
-        return true
-    }
-    console.log('Checking. City is not saved', false)
-    return false
 }
 
 export {

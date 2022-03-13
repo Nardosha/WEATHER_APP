@@ -32,6 +32,7 @@ saveBtn.addEventListener('click', (e) => {
 cityList.addEventListener('click', (e) => {
     const city = e.target.closest('.locations-block__item').id
     if (e.target.classList.contains('locations-block__item-btn')) {
+
         handlerSavingCity(city)
 
     }
@@ -45,10 +46,7 @@ function getDefaultCityWeather() {
     const defaultCity = 'Saint Petersburg'
     const defUrl = getUrl(defaultCity)
     getWeather(defUrl)
-    // let cityIsSaved = checkCity(defaultCity)
-    // toggleSaveBtn(cityIsSaved)
 }
-// function getCityName(city) {
-//     return city
-// }
+
+
 
