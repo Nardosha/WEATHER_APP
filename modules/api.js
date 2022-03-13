@@ -1,16 +1,14 @@
-import {showWeather} from "./view.js";
+import {showWeather, showForecast} from "./view.js";
+import {WEATHER_TYPE} from "./variables.js"
+import {convertToDate, convertToTime, tempConvert} from "./helper.js";
 
-const searchForm = document.querySelector('.search-block__form')
+function getCurrentWeather(cityName, type) {
+    console.log('Load weather. Type', type)
+    const url = getUrl(cityName, type)
 
-
-
-function getWeather(url) {
-    console.log('Load weather')
     fetch(url)
         .then(response => response.json())
-        .then(response => {
-            showWeather(response)
-        })
+        .then(weather => type === WEATHER_TYPE.currentWeather ? showWeather(weather) : showForecast(weather))
         .catch(err => {
             if (err.cod >= 400) {
                 console.log(err)
@@ -23,18 +21,18 @@ function getWeather(url) {
         })
 }
 
-function getUrl(city) {
-    const serverUrl = 'https://api.openweathermap.org/data/2.5/weather'
-    // const apiKey = 'f660a2fb1e4bad108d6160b7f58c555f'
+function getUrl(city, type) {
+    console.log(type)
+    const serverUrl = 'https://api.openweathermap.org/data/2.5/'
     const apiKey = '1041b355b3b6422eb66d9f5e517f7b52'
-    return `${serverUrl}?q=${city}&appid=${apiKey}`
+    return `${serverUrl}${type}?q=${city}&appid=${apiKey}`
 }
 
-function createObj(cityName) {
+function getCurrentWeatherData(cityName) {
     const tempCelc = tempConvert(cityName.main?.temp)
     const feelsCelc = tempConvert(cityName.main?.feels_like)
-    const sunrise = convertDate(cityName.sys?.sunrise)
-    const sunset = convertDate(cityName.sys?.sunset)
+    const sunrise = convertToTime(cityName.sys?.sunrise)
+    const sunset = convertToTime(cityName.sys?.sunset)
 
     return {
         'City': cityName.name,
@@ -47,19 +45,46 @@ function createObj(cityName) {
     }
 }
 
-function convertDate(date) {
-    const dateUnix = new Date(date * 1000)
-    return `${dateUnix.getHours()}:${dateUnix.getMinutes()}`
-}
+function getForecastWeatherData(data) {
+    console.log(data)
+    let {
+        city: {
+            name,
+        },
+        list: [{
+            dt,
+            main: {
+                temp,
+                feels_like,
+            },
+            weather: [{
+                main,
+                icon,
+            }
+            ]
+        }]
+    } = data
 
-function tempConvert(tempKelvin) {
-    const Kelvin = 273.15
-    return Math.round(tempKelvin - Kelvin)
+    const tempCelc = tempConvert(temp)
+    const feelsCelc = tempConvert(feels_like)
+    const day = convertToDate(dt)
+    const time = convertToTime(dt)
+
+    return {
+        'City': name,
+        'Temperature': tempCelc,
+        "Feels like": feelsCelc,
+        iconWeather: icon,
+        'Weather': main,
+        'day': day,
+        'time': time,
+    }
 }
 
 export {
-    searchForm,
     getUrl,
-    getWeather,
-    createObj,
+    getCurrentWeather,
+    getCurrentWeatherData,
+    WEATHER_TYPE,
+    getForecastWeatherData,
 }

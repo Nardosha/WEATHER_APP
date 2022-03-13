@@ -1,15 +1,5 @@
-import {createObj} from './api.js'
-
-const tabContainer = document.querySelector('.tabs__items')
-const tabBlockContainer = document.querySelector('.tabs__content')
-const saveBtn = document.querySelector('.tab-now_save')
-const tabNowTemp = document.querySelector('.tab-now_temp')
-const tabNowIcon = document.querySelector('.tab-now_icon')
-const tabNowCity = document.querySelector('.tab-now_city-name')
-const tabDetailsInfo = document.querySelector('.tab-details_info')
-const cityList = document.querySelector('.locations-block__list')
-let hideCity = document.getElementById(`hide`)
-
+import {getCurrentWeatherData, getForecastWeatherData} from './api.js'
+import { UI, URL } from "./variables.js"
 
 function toggleTab(e) {
     e.preventDefault()
@@ -17,9 +7,9 @@ function toggleTab(e) {
     if (e.target.dataset) {
         const currentTab = e.target
         const currentTabAttribute = currentTab.dataset.tab
-        const tabsBlock = Array.from(tabBlockContainer.children)
+        const tabsBlock = Array.from(UI.tabBlockContainer.children)
         const currentTabBlock = document.getElementById(`tab_${currentTabAttribute}`)
-        const tabs = Array.from(tabContainer.children)
+        const tabs = Array.from(UI.tabContainer.children)
 
         tabs.map(tab => {
             if (tab.classList.contains('_active')) {
@@ -36,16 +26,17 @@ function toggleTab(e) {
     }
 }
 
-function showWeather(data) {
-    const weatherData = createObj(data);
+function showWeather(weather) {
+    console.log('Show weather')
+    const weatherData = getCurrentWeatherData(weather);
 
     // NOW
-    tabNowCity.innerHTML = `${weatherData.City}`
-    tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
-    tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${weatherData.iconWeather}@2x.png') center center /contain no-repeat`
+    UI.tabNowCity.innerHTML = `${weatherData.City}`
+    UI.tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
+    UI.tabNowIcon.style.background = `url("${URL.ICON}${weatherData.iconWeather}@2x.png") center center /contain no-repeat`
 
     // DETAILS
-    const ulDetailsInfo = Array.from(tabDetailsInfo.children)
+    const ulDetailsInfo = Array.from(UI.tabDetailsInfo.children)
     const weatherDataObject = Object.entries(weatherData)
     ulDetailsInfo.forEach(li => {
         weatherDataObject.map(obj => {
@@ -61,40 +52,45 @@ function showWeather(data) {
             }
         })
     })
+
     let cityIsSaved = checkCity(weatherData.City)
     toggleSaveBtn(cityIsSaved)
 }
+function showForecast(weatherData) {
+    console.log('Show forecast')
+    const forecastData = getForecastWeatherData(weatherData)
+    console.log(forecastData)
+}
 
-function handlerSavingCity(city) {
-    let cityName = city ? city : saveBtn.previousElementSibling.innerHTML
+function handlerSavingCity(city, action) {
+    const currentCity = UI.saveBtn.previousElementSibling.innerHTML
+    let cityName = city ? city : currentCity
+
+    // Проверяем наличие города в списке
     const cityIsSaved = checkCity(cityName);
 
-    if (!city) {
-        toggleSaveBtn(!cityIsSaved)
+    // Проверяем открыт ли тот город, который хотим удалить из списка
+    if (cityName !== currentCity) {
+        removeCityItem(cityName)
+        return
     }
+    // Переключаем кнопку
+    toggleSaveBtn(!cityIsSaved)
 
+    // Удаляем/сохраняем город в соответствии с cityIsSaved
     cityIsSaved
         ? removeCityItem(cityName)
         : createCityItem(cityName)
 }
 
-function toggleSaveBtn(isSaved) {
-    console.log('SaveBtn active', isSaved)
-    isSaved ? saveBtn.classList.add('_active') : saveBtn.classList.remove('_active')
-}
-
-function removeCityItem(cityName) {
-    console.log('Remove city', cityName)
-    document.getElementById(`${cityName}`).remove()
-    // toggleSaveBtn(false)
-}
-
-function createCityItem(city) {
-    let currentCity = hideCity.cloneNode(true)
-    currentCity.id = `${city}`
-    currentCity.querySelector('.locations-block__item-city').textContent = city
-    cityList.append(currentCity)
-    console.log(currentCity)
+function toggleSaveBtn(cityIsSaved) {
+    console.log('SaveBtn. CityIsSaved:', cityIsSaved)
+    if (cityIsSaved) {
+        UI.saveBtn.classList.add('_active')
+    } else {
+        UI.saveBtn.classList.remove('_active')
+    }
+    console.log('SaveBtn. Active', cityIsSaved)
 }
 
 function checkCity(cityName) {
@@ -106,20 +102,24 @@ function checkCity(cityName) {
     return false
 }
 
+function removeCityItem(cityName) {
+    console.log('Remove city', cityName)
+    document.getElementById(`${cityName}`).remove()
+}
+
+function createCityItem(city) {
+    let currentCity = UI.hideCity.cloneNode(true)
+    currentCity.id = `${city}`
+    currentCity.querySelector('.locations-block__item-city').textContent = city
+    UI.cityList.append(currentCity)
+    console.log(currentCity)
+}
+
 export {
-    tabContainer,
     toggleTab,
     showWeather,
-    saveBtn,
-    cityList,
     handlerSavingCity,
     checkCity,
     toggleSaveBtn,
+    showForecast
 }
-
-// const cityItem = document.createElement('li')
-// const spanCity = document.createElement('span')
-// const spanCBtn = document.createElement('span')
-// cityItem.classList.add('locations-block__item')
-// spanCity.classList.add('locations-block__item-city')
-// spanCBtn.classList.add('locations-block__item-btn')

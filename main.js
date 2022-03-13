@@ -1,13 +1,13 @@
-import {getUrl, searchForm, getWeather } from "./modules/api.js";
-import {tabContainer, toggleTab, saveBtn, cityList, handlerSavingCity, checkCity, toggleSaveBtn} from "./modules/view.js";
+import {getUrl, getCurrentWeather } from "./modules/api.js";
+import {toggleTab, handlerSavingCity, checkCity, toggleSaveBtn} from "./modules/view.js";
+import { UI, WEATHER_TYPE, DEFAULT_CITY } from "./modules/variables.js"
 
 getDefaultCityWeather()
 
 // Switch tabs
-tabContainer.addEventListener('click', toggleTab)
+UI.tabContainer.addEventListener('click', toggleTab)
 
-// Show weather - tab "Now"
-searchForm.onsubmit = function (e) {
+UI.searchForm.onsubmit = function (e) {
     e.preventDefault()
     const inputValue = document.querySelector('.search-block__input').value
     const invalidCheck = /[().^+]/g
@@ -18,37 +18,30 @@ searchForm.onsubmit = function (e) {
     }
 
     const cityName = inputValue.replace(/-/g, ' ')
-    const url = getUrl(cityName)
-
-    getWeather(url)
+    getCurrentWeather(cityName, WEATHER_TYPE.currentWeather)
+    getCurrentWeather(cityName, WEATHER_TYPE.forecast)
 
     let cityIsSaved = checkCity(cityName)
     toggleSaveBtn(cityIsSaved)
 }
 
-saveBtn.addEventListener('click', (e) => {
+UI.saveBtn.addEventListener('click', (e) => {
     handlerSavingCity()
 })
-cityList.addEventListener('click', (e) => {
+
+UI.cityList.addEventListener('click', (e) => {
     const city = e.target.closest('.locations-block__item').id
+
     if (e.target.classList.contains('locations-block__item-btn')) {
         handlerSavingCity(city)
-
     }
     if (e.target.classList.contains('locations-block__item-city')) {
         console.log('city', city)
-        const url = getUrl(city)
-        getWeather(url)
+        const urlCurrentWeather = getUrl(city, WEATHER_TYPE.currentWeather)
+        getCurrentWeather(urlCurrentWeather)
     }
 })
 function getDefaultCityWeather() {
-    const defaultCity = 'Saint Petersburg'
-    const defUrl = getUrl(defaultCity)
-    getWeather(defUrl)
-    // let cityIsSaved = checkCity(defaultCity)
-    // toggleSaveBtn(cityIsSaved)
+    getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.currentWeather)
+    getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.forecast)
 }
-// function getCityName(city) {
-//     return city
-// }
-
