@@ -24,3 +24,9 @@ export const WEATHER_TYPE = {
     currentWeather: 'weather',
     forecast: 'forecast',
 }
+
+export const DEFAULT_CITY = 'Saint Petersburg'
+
+export const URL = {
+    ICON: `https://openweathermap.org/img/wn/`
+}

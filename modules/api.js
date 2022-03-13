@@ -1,16 +1,14 @@
-import {showWeather} from "./view.js";
-import { MONTH, WEATHER_TYPE } from "./variables.js"
+import {showWeather, showForecast} from "./view.js";
+import {WEATHER_TYPE} from "./variables.js"
+import {convertToDate, convertToTime, tempConvert} from "./helper.js";
 
-function getCurrentWeather(url) {
-    console.log('Load weather')
+function getCurrentWeather(cityName, type) {
+    console.log('Load weather. Type', type)
+    const url = getUrl(cityName, type)
 
     fetch(url)
         .then(response => response.json())
-        .then(weather => {
-            fetch(getUrl(weather.name, WEATHER_TYPE.forecast))
-                .then(res => res.json())
-                .then(forecast => showWeather(weather, forecast))
-        })
+        .then(weather => type === WEATHER_TYPE.currentWeather ? showWeather(weather) : showForecast(weather))
         .catch(err => {
             if (err.cod >= 400) {
                 console.log(err)
@@ -26,12 +24,11 @@ function getCurrentWeather(url) {
 function getUrl(city, type) {
     console.log(type)
     const serverUrl = 'https://api.openweathermap.org/data/2.5/'
-    // const apiKey = 'f660a2fb1e4bad108d6160b7f58c555f'
     const apiKey = '1041b355b3b6422eb66d9f5e517f7b52'
     return `${serverUrl}${type}?q=${city}&appid=${apiKey}`
 }
 
-function currentWeatherData(cityName) {
+function getCurrentWeatherData(cityName) {
     const tempCelc = tempConvert(cityName.main?.temp)
     const feelsCelc = tempConvert(cityName.main?.feels_like)
     const sunrise = convertToTime(cityName.sys?.sunrise)
@@ -48,60 +45,46 @@ function currentWeatherData(cityName) {
     }
 }
 
-function forecastWeatherData(data) {
-    const tempCelc = tempConvert(data.list[0].main?.temp)
-    const feelsCelc = tempConvert(data.list[0].main?.feels_like)
+function getForecastWeatherData(data) {
+    console.log(data)
+    let {
+        city: {
+            name,
+        },
+        list: [{
+            dt,
+            main: {
+                temp,
+                feels_like,
+            },
+            weather: [{
+                main,
+                icon,
+            }
+            ]
+        }]
+    } = data
 
-    const unixData = Date.parse(data.list[0].dt_txt) / 1000
-    const day = convertToDate(unixData)
-    const time = convertToTime(unixData)
+    const tempCelc = tempConvert(temp)
+    const feelsCelc = tempConvert(feels_like)
+    const day = convertToDate(dt)
+    const time = convertToTime(dt)
 
     return {
-        'City': data.city.name,
+        'City': name,
         'Temperature': tempCelc,
         "Feels like": feelsCelc,
-        iconWeather: data.list[0].weather[0].icon,
-        'Weather': data.list[0].weather[0].main,
+        iconWeather: icon,
+        'Weather': main,
         'day': day,
         'time': time,
     }
 }
 
-
-function convertToDate(date) {
-    const dateUnix = new Date(date)
-    const day = dateUnix.getDate()
-    const monthNumber = dateUnix.getUTCMonth()
-    const month = getMonth(monthNumber)
-    return `${day} ${month}`
-}
-
-function getMonth(date) {
-    date = date.toString()
-    for (let key in MONTH) {
-        if (key === date) {
-            return MONTH[key]
-        }
-    }
-}
-
-function convertToTime(date) {
-    const dateUnix = new Date(date * 1000)
-    let minutes = dateUnix.getMinutes()
-    minutes = minutes === 0 ? '00' : minutes
-    let hours = dateUnix.getHours()
-    return `${hours}:${minutes}`
-}
-
-function tempConvert(tempKelvin) {
-    const Kelvin = 273.15
-    return Math.round(tempKelvin - Kelvin)
-}
-
 export {
     getUrl,
     getCurrentWeather,
-    currentWeatherData,
+    getCurrentWeatherData,
     WEATHER_TYPE,
-    forecastWeatherData,
+    getForecastWeatherData,
 }

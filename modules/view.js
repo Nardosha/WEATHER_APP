@@ -1,5 +1,5 @@
-import {currentWeatherData, forecastWeatherData} from './api.js'
-import { UI } from "./variables.js"
+import {getCurrentWeatherData, getForecastWeatherData} from './api.js'
+import { UI, URL } from "./variables.js"
 
 function toggleTab(e) {
     e.preventDefault()
@@ -26,16 +26,14 @@ function toggleTab(e) {
     }
 }
 
-function showWeather(weather, forecast) {
-    const weatherData = currentWeatherData(weather);
-    const forecastData = forecastWeatherData(forecast)
-    console.log(forecastData)
-
+function showWeather(weather) {
+    console.log('Show weather')
+    const weatherData = getCurrentWeatherData(weather);
 
     // NOW
     UI.tabNowCity.innerHTML = `${weatherData.City}`
     UI.tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
-    UI.tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${weatherData.iconWeather}@2x.png') center center /contain no-repeat`
+    UI.tabNowIcon.style.background = `url("${URL.ICON}${weatherData.iconWeather}@2x.png") center center /contain no-repeat`
 
     // DETAILS
     const ulDetailsInfo = Array.from(UI.tabDetailsInfo.children)
@@ -55,10 +53,13 @@ function showWeather(weather, forecast) {
         })
     })
 
-    // FORECAST
-    UI.tabForecast.textContent = forecastData;
     let cityIsSaved = checkCity(weatherData.City)
     toggleSaveBtn(cityIsSaved)
+}
+function showForecast(weatherData) {
+    console.log('Show forecast')
+    const forecastData = getForecastWeatherData(weatherData)
+    console.log(forecastData)
 }
 
 function handlerSavingCity(city, action) {
@@ -104,7 +105,6 @@ function checkCity(cityName) {
 function removeCityItem(cityName) {
     console.log('Remove city', cityName)
     document.getElementById(`${cityName}`).remove()
-    // toggleSaveBtn(false)
 }
 
 function createCityItem(city) {
@@ -121,4 +121,5 @@ export {
     handlerSavingCity,
     checkCity,
     toggleSaveBtn,
+    showForecast
 }

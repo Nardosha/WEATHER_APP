@@ -1,6 +1,6 @@
 import {getUrl, getCurrentWeather } from "./modules/api.js";
 import {toggleTab, handlerSavingCity, checkCity, toggleSaveBtn} from "./modules/view.js";
-import { UI, WEATHER_TYPE } from "./modules/variables.js"
+import { UI, WEATHER_TYPE, DEFAULT_CITY } from "./modules/variables.js"
 
 getDefaultCityWeather()
 
@@ -18,8 +18,8 @@ UI.searchForm.onsubmit = function (e) {
     }
 
     const cityName = inputValue.replace(/-/g, ' ')
-    const urlCurrentWeather = getUrl(cityName, WEATHER_TYPE.currentWeather)
-    getCurrentWeather(urlCurrentWeather)
+    getCurrentWeather(cityName, WEATHER_TYPE.currentWeather)
+    getCurrentWeather(cityName, WEATHER_TYPE.forecast)
 
     let cityIsSaved = checkCity(cityName)
     toggleSaveBtn(cityIsSaved)
@@ -42,7 +42,6 @@ UI.cityList.addEventListener('click', (e) => {
     }
 })
 function getDefaultCityWeather() {
-    const defaultCity = 'Saint Petersburg'
-    const defUrlCurrentWeather = getUrl(defaultCity, WEATHER_TYPE.currentWeather)
-    getCurrentWeather(defUrlCurrentWeather)
+    getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.currentWeather)
+    getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.forecast)
 }
