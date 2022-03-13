@@ -1,15 +1,5 @@
-import {createObj} from './api.js'
-
-const tabContainer = document.querySelector('.tabs__items')
-const tabBlockContainer = document.querySelector('.tabs__content')
-const saveBtn = document.querySelector('.tab-now_save')
-const tabNowTemp = document.querySelector('.tab-now_temp')
-const tabNowIcon = document.querySelector('.tab-now_icon')
-const tabNowCity = document.querySelector('.tab-now_city-name')
-const tabDetailsInfo = document.querySelector('.tab-details_info')
-const cityList = document.querySelector('.locations-block__list')
-let hideCity = document.getElementById(`hide`)
-
+import {currentWeatherData, forecastWeatherData} from './api.js'
+import { UI } from "./variables.js"
 
 function toggleTab(e) {
     e.preventDefault()
@@ -17,9 +7,9 @@ function toggleTab(e) {
     if (e.target.dataset) {
         const currentTab = e.target
         const currentTabAttribute = currentTab.dataset.tab
-        const tabsBlock = Array.from(tabBlockContainer.children)
+        const tabsBlock = Array.from(UI.tabBlockContainer.children)
         const currentTabBlock = document.getElementById(`tab_${currentTabAttribute}`)
-        const tabs = Array.from(tabContainer.children)
+        const tabs = Array.from(UI.tabContainer.children)
 
         tabs.map(tab => {
             if (tab.classList.contains('_active')) {
@@ -36,16 +26,19 @@ function toggleTab(e) {
     }
 }
 
-function showWeather(data) {
-    const weatherData = createObj(data);
+function showWeather(weather, forecast) {
+    const weatherData = currentWeatherData(weather);
+    const forecastData = forecastWeatherData(forecast)
+    console.log(forecastData)
+
 
     // NOW
-    tabNowCity.innerHTML = `${weatherData.City}`
-    tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
-    tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${weatherData.iconWeather}@2x.png') center center /contain no-repeat`
+    UI.tabNowCity.innerHTML = `${weatherData.City}`
+    UI.tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
+    UI.tabNowIcon.style.background = `url('https://openweathermap.org/img/wn/${weatherData.iconWeather}@2x.png') center center /contain no-repeat`
 
     // DETAILS
-    const ulDetailsInfo = Array.from(tabDetailsInfo.children)
+    const ulDetailsInfo = Array.from(UI.tabDetailsInfo.children)
     const weatherDataObject = Object.entries(weatherData)
     ulDetailsInfo.forEach(li => {
         weatherDataObject.map(obj => {
@@ -61,25 +54,15 @@ function showWeather(data) {
             }
         })
     })
+
+    // FORECAST
+    UI.tabForecast.textContent = forecastData;
     let cityIsSaved = checkCity(weatherData.City)
     toggleSaveBtn(cityIsSaved)
 }
 
-// function handlerSavingCity(city) {
-//     let cityName = city ? city : saveBtn.previousElementSibling.innerHTML
-//     const cityIsSaved = checkCity(cityName);
-//
-//     if (!city) {
-//         toggleSaveBtn(!cityIsSaved)
-//     }
-//
-//     cityIsSaved
-//         ? removeCityItem(cityName)
-//         : createCityItem(cityName)
-// }
-
 function handlerSavingCity(city, action) {
-    const currentCity = saveBtn.previousElementSibling.innerHTML
+    const currentCity = UI.saveBtn.previousElementSibling.innerHTML
     let cityName = city ? city : currentCity
 
     // Проверяем наличие города в списке
@@ -102,9 +85,9 @@ function handlerSavingCity(city, action) {
 function toggleSaveBtn(cityIsSaved) {
     console.log('SaveBtn. CityIsSaved:', cityIsSaved)
     if (cityIsSaved) {
-        saveBtn.classList.add('_active')
+        UI.saveBtn.classList.add('_active')
     } else {
-        saveBtn.classList.remove('_active')
+        UI.saveBtn.classList.remove('_active')
     }
     console.log('SaveBtn. Active', cityIsSaved)
 }
@@ -125,27 +108,17 @@ function removeCityItem(cityName) {
 }
 
 function createCityItem(city) {
-    let currentCity = hideCity.cloneNode(true)
+    let currentCity = UI.hideCity.cloneNode(true)
     currentCity.id = `${city}`
     currentCity.querySelector('.locations-block__item-city').textContent = city
-    cityList.append(currentCity)
+    UI.cityList.append(currentCity)
     console.log(currentCity)
 }
 
 export {
-    tabContainer,
     toggleTab,
     showWeather,
-    saveBtn,
-    cityList,
     handlerSavingCity,
     checkCity,
     toggleSaveBtn,
 }
-
-// const cityItem = document.createElement('li')
-// const spanCity = document.createElement('span')
-// const spanCBtn = document.createElement('span')
-// cityItem.classList.add('locations-block__item')
-// spanCity.classList.add('locations-block__item-city')
-// spanCBtn.classList.add('locations-block__item-btn')
