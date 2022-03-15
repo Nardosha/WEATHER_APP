@@ -377,6 +377,7 @@ body {
   line-height: 117.1666666667%;
   font-weight: 400;
   color: #000;
+  background-color: #000;
 }
 
 .wrapper {
@@ -400,6 +401,7 @@ body {
   display: grid;
   grid-template-rows: 45px auto;
   border: 1px solid #000;
+  background-color: #999;
 }
 .page__top {
   border-bottom: 1px solid #000;
@@ -424,6 +426,7 @@ body {
   padding: 12px 40px 12px 16px;
   height: 100%;
   outline: none;
+  background-color: #999;
 }
 .search-block__button {
   background: url(../assets/search-block/search-icon.svg) center no-repeat;
@@ -437,35 +440,36 @@ body {
   margin: 0 10px 0 0;
 }
 
-.content-block .content-column {
+.content-column {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 45px;
+  grid-template-rows: minmax(345px, 345px) 45px;
   border-right: 1px solid #000;
 }
 
-.tabs__content {
-  height: 100%;
+.tabs .tabs__content {
+  overflow: auto;
+  max-height: 345px;
 }
-.tabs__content .tabs__block {
+.tabs .tabs__content .tabs__block {
   display: none;
   height: 100%;
 }
-.tabs__content .tab-now {
+.tabs .tabs__content .tab-now {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
 }
-.tabs__content .tab-now_temp {
+.tabs .tabs__content .tab-now .tab-now_temp {
   padding: 20px 23px;
   line-height: 117.1428571429%;
   text-align: left;
   font-size: 70px;
   margin: 0 0 15px 0;
 }
-.tabs__content .tab-now_icon {
+.tabs .tabs__content .tab-now .tab-now_icon {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -475,30 +479,78 @@ body {
   background-position: center;
   background-size: contain;
 }
-.tabs__content .tab-now_city {
+.tabs .tabs__content .tab-now .tab-now_city {
   display: flex;
   justify-content: space-between;
   padding: 10px 26px 12px 12px;
   position: relative;
 }
-.tabs__content .tab-now_city .tab-now_city-name {
+.tabs .tabs__content .tab-now .tab-now_city .tab-now_city-name {
   font-size: 24px;
   line-height: 116.6666666667%;
 }
-.tabs__content .tab-now_city .tab-now_save {
+.tabs .tabs__content .tab-now .tab-now_city .tab-now_save {
   cursor: pointer;
 }
-.tabs__content .tab-now_city .tab-now_save svg {
+.tabs .tabs__content .tab-now .tab-now_city .tab-now_save svg {
   transition: all 0.3s ease-in-out;
 }
-.tabs__content .tab-now_city .tab-now_save svg:hover {
+.tabs .tabs__content .tab-now .tab-now_city .tab-now_save svg:hover {
   opacity: 1;
 }
-.tabs__content .tab-now_city .tab-now_save._active svg {
+.tabs .tabs__content .tab-now .tab-now_city .tab-now_save._active svg {
   fill: black;
   opacity: 1;
 }
-.tabs__content ._active {
+.tabs .tabs__content .tab-forecast__container {
+  margin: 0 17px;
+}
+.tabs .tabs__content .tab-forecast__container-clone {
+  margin: 0 17px;
+}
+.tabs .tabs__content .tab-forecast__city {
+  margin: 33px 0 7px 0;
+}
+.tabs .tabs__content .tab-forecast__weather {
+  border: 1px solid #000;
+  max-height: 120px;
+  min-height: 120px;
+  padding: 6px 10px 13px 10px;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather:not(:last-child) {
+  margin: 0 0 10px 0;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather .forecast-weather__day {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather .forecast-weather__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: center;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather .forecast-weather__main-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.tabs .tabs__content .tab-forecast .forecast-weather .forecast-weather__main-icon_icon {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 51px;
+  height: 51px;
+}
+.tabs .tabs__content ._active {
   display: block;
 }
 .tabs__items {

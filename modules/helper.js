@@ -1,7 +1,7 @@
 import {MONTH} from "./variables.js";
 
 export function convertToDate(date) {
-    const dateUnix = new Date(date)
+    const dateUnix = new Date(date * 1000)
     const day = dateUnix.getDate()
     const monthNumber = dateUnix.getUTCMonth()
     const month = getMonth(monthNumber)
@@ -10,18 +10,18 @@ export function convertToDate(date) {
 
 export function getMonth(date) {
     date = date.toString()
-    for (let key in MONTH) {
-        if (key === date) {
-            return MONTH[key]
-        }
-    }
+    return MONTH[date] || ''
 }
 
+// Баг 0:00
 export function convertToTime(date) {
     const dateUnix = new Date(date * 1000)
     let minutes = dateUnix.getMinutes()
-    minutes = minutes === 0 ? '00' : minutes
     let hours = dateUnix.getHours()
+    minutes = minutes === 0 ? '00' : minutes
+    if (hours < 10) {
+        hours = `0${hours}`
+    }
     return `${hours}:${minutes}`
 }
 

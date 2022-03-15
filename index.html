@@ -17,46 +17,69 @@
 					</div>
 				</section>
 				<section class="page__bottom content-block">
-					<div class="content-block content-column">
-						<div class="content-column__container tabs">
-							<div class="tabs__content">
-								<div class="tabs__block _active" id="tab_now">
-									<div class="tab-now">
-										<div class="tab-now_temp">Temp</div>
-										<div class="tab-now_icon"></div>
-										<div class="tab-now_city">
-											<div class="tab-now_city-name">SPB</div>
-											<div class="tab-now_save">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none" opacity="0.54">
-													<path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 1C15.0556 1 12.8556 2.7875 12 5.125C11.1444 2.7875 8.94444 1 6.5 1C3.44444 1 1 3.6125 1 7.1875C1 12 5.27778 16.125 12 23C18.7222 16.125 23 12 23 7.1875C23 3.6125 20.5556 1 17.5 1Z" stroke="black" stroke-width="2"/>
-												</svg>
+					<div class="content-block content-column tabs">
+						<div class="tabs__content">
+							<div class="tabs__block" id="tab_now">
+								<div class="tab-now">
+									<div class="tab-now_temp">Temp</div>
+									<div class="tab-now_icon"></div>
+									<div class="tab-now_city">
+										<div class="tab-now_city-name">SPB</div>
+										<div class="tab-now_save">
+											<svg fill="none" height="25" opacity="0.54"
+											     viewBox="0 0 24 25" width="24" xmlns="http://www.w3.org/2000/svg">
+												<path clip-rule="evenodd"
+												      d="M17.5 1C15.0556 1 12.8556 2.7875 12 5.125C11.1444 2.7875 8.94444 1 6.5 1C3.44444 1 1 3.6125 1 7.1875C1 12 5.27778 16.125 12 23C18.7222 16.125 23 12 23 7.1875C23 3.6125 20.5556 1 17.5 1Z"
+												      fill-rule="evenodd"
+												      stroke="black" stroke-width="2"/>
+											</svg>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tabs__block tab-details" id="tab_details">
+								<div class="tab-details__container">
+									<ul class="tab-details_info">
+										<li class="tab-details_info-city" data-details="City"></li>
+										<li class="tab-details_info-temp" data-details="Temperature">Temperature: -</li>
+										<li class="tab-details_info-feels" data-details="Feels like">Feels like: -
+										</li>
+										<li class="tab-details_info-weather" data-details="Weather">Weather: -</li>
+										<li class="tab-details_info-sunrise" data-details="Sunrise">Sunrise: -</li>
+										<li class="tab-details_info-sunset" data-details="Sunset">Sunset: -</li>
+									</ul>
+								</div>
+							</div>
+							<div class="tabs__block _active" id="tab_forecast">
+								<div class="tab-forecast">
+									<div class="tab-forecast__container-clone">
+										<div class="tab-forecast__city">Aktobe</div>
+										<div id="hideForecast" class="tab-forecast__weather forecast-weather">
+											<div class="forecast-weather__day">
+												<div class="forecast-weather__day-month">17 March</div>
+												<div class="forecast-weather__day-time">15:00</div>
+											</div>
+											<div class="forecast-weather__main">
+												<div class="forecast-weather__main-temp">
+													<div data-details="Temperature" class="forecast-weather__temp-celc">Temperature: 15 C</div>
+													<div data-details="Feels like" class="forecast-weather__temp-feels">Feels like: 20 C</div>
+												</div>
+												<div class="forecast-weather__main-icon">
+													<div class="forecast-weather__main-icon_name">Sun</div>
+													<div class="forecast-weather__main-icon_icon"></div>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="tabs__block tab-details" id="tab_details">
-									<div class="tab-details">
-										<ul class="tab-details_info">
-											<li data-details="City" class="tab-details_info-city">Temperature: -</li>
-											<li data-details="Temperature" class="tab-details_info-temp">Temperature: -</li>
-											<li data-details="Feels like" class="tab-details_info-feels">Feels like: -</li>
-											<li data-details="Weather" class="tab-details_info-weather">Weather: -</li>
-											<li data-details="Sunrise" class="tab-details_info-sunrise">Sunrise: -</li>
-											<li data-details="Sunset" class="tab-details_info-sunset">Sunset: -</li>
-										</ul>
-									</div>
-								</div>
-								<div class="tabs__block" id="tab_forecast">
-									<p class="tab-details_temp">Weather on week</p>
-								</div>
 							</div>
-							<nav class="tabs__items">
-								<a class="tabs__item item-now _active" data-tab="now" href="#tab_now">Now</a>
-								<a class="tabs__item item-details" data-tab="details" href="#tab_details">Details</a>
-								<a class="tabs__item item-forecast" data-tab="forecast"
-								   href="#tab_forecast">Forecast</a>
-							</nav>
 						</div>
+						<nav class="tabs__items">
+							<a class="tabs__item item-now _active" data-tab="now" href="#tab_now">Now</a>
+							<a class="tabs__item item-details" data-tab="details" href="#tab_details">Details</a>
+							<a class="tabs__item item-forecast" data-tab="forecast"
+							   href="#tab_forecast">Forecast</a>
+						</nav>
 					</div>
 					<div class="content-block location-column">
 						<div class="location-column__title-block">
@@ -64,13 +87,13 @@
 						</div>
 						<div class="location-column__locations-block locations-block ">
 							<ul class="locations-block__list">
-								<li id='hide' class="locations-block__item">
+								<li class="locations-block__item" id="hide">
 									<span class="locations-block__item-city">Hide</span>
 									<span class="locations-block__item-btn"></span>
 								</li>
-								<li id='Saint Petersburg' class="locations-block__item">
-								<span class="locations-block__item-city">Saint Petersburg</span>
-								<span class="locations-block__item-btn"></span>
+								<li class="locations-block__item" id="Saint Petersburg">
+									<span class="locations-block__item-city">Saint Petersburg</span>
+									<span class="locations-block__item-btn"></span>
 								</li>
 							</ul>
 						</div>

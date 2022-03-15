@@ -46,38 +46,32 @@ function getCurrentWeatherData(cityName) {
 }
 
 function getForecastWeatherData(data) {
-    console.log(data)
     let {
-        city: {
-            name,
+        dt,
+        main: {
+            temp,
+            feels_like,
         },
-        list: [{
-            dt,
-            main: {
-                temp,
-                feels_like,
-            },
-            weather: [{
-                main,
-                icon,
-            }
-            ]
-        }]
-    } = data
+        weather: [{
+            main,
+            icon,
+        }
+        ]
+    }
+        = data
 
-    const tempCelc = tempConvert(temp)
-    const feelsCelc = tempConvert(feels_like)
+    temp = tempConvert(temp)
+    const feels = tempConvert(feels_like)
     const day = convertToDate(dt)
     const time = convertToTime(dt)
 
     return {
-        'City': name,
-        'Temperature': tempCelc,
-        "Feels like": feelsCelc,
-        iconWeather: icon,
-        'Weather': main,
-        'day': day,
-        'time': time,
+        temp,
+        feels,
+        icon,
+        main,
+        day,
+        time,
     }
 }
 

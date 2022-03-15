@@ -1,5 +1,6 @@
 import {getCurrentWeatherData, getForecastWeatherData} from './api.js'
 import { UI, URL } from "./variables.js"
+import  {setForecastWeather} from './setForecastWeather.js'
 
 function toggleTab(e) {
     e.preventDefault()
@@ -56,11 +57,37 @@ function showWeather(weather) {
     let cityIsSaved = checkCity(weatherData.City)
     toggleSaveBtn(cityIsSaved)
 }
+
 function showForecast(weatherData) {
+
     console.log('Show forecast')
-    const forecastData = getForecastWeatherData(weatherData)
-    console.log(forecastData)
+    const forecastList = weatherData.list
+    UI.tabForecastCity.textContent = weatherData.city.name
+
+    // const container = UI.tabForecastContainer.cloneNode(true);
+    // UI.tabForecastList.removeChild(UI.tabForecastContainer)
+    // UI.tabForecastContainer.remove()
+    // console.log(container)
+    // container.classList.replace('tab-forecast__container-clone', 'tab-forecast__container')
+    //
+    forecastList.forEach(item => {
+        const forecastData = getForecastWeatherData(item)
+        // setW(forecastData, container)
+        setForecastWeather(forecastData, UI.tabForecastContainer)
+    })
+    // UI.tabForecastList.append(container)
 }
+// function setW({day, time, temp, feels, icon, main}, container) {
+//     const newTabForecastCont = container.querySelector('.tab-forecast__weather').cloneNode(true);
+//
+//     newTabForecastCont.querySelector('.forecast-weather__day-month').textContent = day
+//     newTabForecastCont.querySelector('.forecast-weather__day-time').textContent = `${time}`
+//     newTabForecastCont.querySelector('.forecast-weather__temp-celc').innerHTML = `${UI.tabForecastTemp.dataset.details} ${temp}&deg;`
+//     newTabForecastCont.querySelector('.forecast-weather__temp-feels').innerHTML = `${UI.tabForecastFeels.dataset.details} ${feels}&deg;`
+//     newTabForecastCont.querySelector('.forecast-weather__main-icon_name').textContent = `${main}`
+//     newTabForecastCont.querySelector('.forecast-weather__main-icon_icon').style.background = `url("${URL.ICON}${icon}@2x.png") center center /cover no-repeat`
+//     container.append(newTabForecastCont)
+// }
 
 function handlerSavingCity(city, action) {
     const currentCity = UI.saveBtn.previousElementSibling.innerHTML
