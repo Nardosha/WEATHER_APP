@@ -502,14 +502,11 @@ body {
   fill: black;
   opacity: 1;
 }
-.tabs .tabs__content .tab-forecast__container {
-  margin: 0 17px;
-}
-.tabs .tabs__content .tab-forecast__container-clone {
+.tabs .tabs__content .tab-forecast__wrapper {
   margin: 0 17px;
 }
 .tabs .tabs__content .tab-forecast__city {
-  margin: 33px 0 7px 0;
+  margin: 33px 7px 7px 17px;
 }
 .tabs .tabs__content .tab-forecast__weather {
   border: 1px solid #000;
@@ -549,6 +546,12 @@ body {
   left: 0;
   width: 51px;
   height: 51px;
+}
+.tabs .tabs__content #forecast-weather-hide {
+  display: none;
+}
+.tabs .tabs__content #forecast-weather-show {
+  display: flex;
 }
 .tabs .tabs__content ._active {
   display: block;

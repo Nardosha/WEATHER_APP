@@ -1,6 +1,5 @@
 import {getCurrentWeatherData, getForecastWeatherData} from './api.js'
-import { UI, URL } from "./variables.js"
-import  {setForecastWeather} from './setForecastWeather.js'
+import { UI, URL, FORECAST_LIST_LENGTH } from "./variables.js"
 
 function toggleTab(e) {
     e.preventDefault()
@@ -59,35 +58,30 @@ function showWeather(weather) {
 }
 
 function showForecast(weatherData) {
-
     console.log('Show forecast')
     const forecastList = weatherData.list
+    forecastList.length = FORECAST_LIST_LENGTH
     UI.tabForecastCity.textContent = weatherData.city.name
+    UI.tabForecastContainer.innerHTML = ''
 
-    // const container = UI.tabForecastContainer.cloneNode(true);
-    // UI.tabForecastList.removeChild(UI.tabForecastContainer)
-    // UI.tabForecastContainer.remove()
-    // console.log(container)
-    // container.classList.replace('tab-forecast__container-clone', 'tab-forecast__container')
-    //
     forecastList.forEach(item => {
         const forecastData = getForecastWeatherData(item)
-        // setW(forecastData, container)
-        setForecastWeather(forecastData, UI.tabForecastContainer)
+        setW(forecastData)
     })
-    // UI.tabForecastList.append(container)
 }
-// function setW({day, time, temp, feels, icon, main}, container) {
-//     const newTabForecastCont = container.querySelector('.tab-forecast__weather').cloneNode(true);
-//
-//     newTabForecastCont.querySelector('.forecast-weather__day-month').textContent = day
-//     newTabForecastCont.querySelector('.forecast-weather__day-time').textContent = `${time}`
-//     newTabForecastCont.querySelector('.forecast-weather__temp-celc').innerHTML = `${UI.tabForecastTemp.dataset.details} ${temp}&deg;`
-//     newTabForecastCont.querySelector('.forecast-weather__temp-feels').innerHTML = `${UI.tabForecastFeels.dataset.details} ${feels}&deg;`
-//     newTabForecastCont.querySelector('.forecast-weather__main-icon_name').textContent = `${main}`
-//     newTabForecastCont.querySelector('.forecast-weather__main-icon_icon').style.background = `url("${URL.ICON}${icon}@2x.png") center center /cover no-repeat`
-//     container.append(newTabForecastCont)
-// }
+
+function setW({day, time, temp, feels, icon, main}) {
+    const forecastItemHourly = UI.tabForecastWeather.cloneNode(true);
+
+    forecastItemHourly.querySelector('.forecast-weather__day-month').textContent = day
+    forecastItemHourly.querySelector('.forecast-weather__day-time').textContent = `${time}`
+    forecastItemHourly.querySelector('.forecast-weather__temp-celc').innerHTML = `${UI.tabForecastTemp.dataset.details} ${temp}&deg;`
+    forecastItemHourly.querySelector('.forecast-weather__temp-feels').innerHTML = `${UI.tabForecastFeels.dataset.details} ${feels}&deg;`
+    forecastItemHourly.querySelector('.forecast-weather__main-icon_name').textContent = `${main}`
+    forecastItemHourly.querySelector('.forecast-weather__main-icon_icon').style.background = `url("${URL.ICON}${icon}@2x.png") center center /cover no-repeat`
+    forecastItemHourly.id = 'forecast-weather-show'
+    UI.tabForecastContainer.append(forecastItemHourly)
+}
 
 function handlerSavingCity(city, action) {
     const currentCity = UI.saveBtn.previousElementSibling.innerHTML

@@ -8,13 +8,13 @@ export const UI = {
     tabDetailsInfo: document.querySelector('.tab-details_info'),
     cityList: document.querySelector('.locations-block__list'),
     tabForecast: document.querySelector('.tab-details_temp'),
-    inputValue: document.querySelector('.search-block__input'),
+    formInput: document.querySelector('.search-block__input'),
     searchForm: document.querySelector('.search-block__form'),
     hideCity: document.getElementById(`hide`),
 
     // Forecast
     tabForecastList: document.querySelector('.tab-forecast'),
-    tabForecastContainer: document.querySelector('.tab-forecast__container-clone'),
+    tabForecastContainer: document.querySelector('.tab-forecast__wrapper'),
     tabForecastWeather: document.querySelector('.tab-forecast__weather'),
     tabForecastCity: document.querySelector('.tab-forecast__city'),
     tabForecastDay: document.querySelector('.forecast-weather__day-month'),
@@ -50,3 +50,5 @@ export const DEFAULT_CITY = 'Saint Petersburg'
 export const URL = {
     ICON: `https://openweathermap.org/img/wn/`
 }
+
+export const FORECAST_LIST_LENGTH = 8

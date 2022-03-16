@@ -182,15 +182,12 @@ body {
 
     .tab-forecast {
 
-      &__container {
-        margin: 0 17px;
-      }
-      &__container-clone {
+      &__wrapper {
         margin: 0 17px;
       }
 
       &__city {
-        margin: 33px 0 7px 0;
+        margin: 33px 7px 7px 17px;
       }
 
       &__weather {
@@ -250,14 +247,14 @@ body {
             }
           }
         }
-        #forecast {
-          //display: flex;
-        }
-      }
-      #hideForecast {
-        //display: none;
-      }
 
+      }
+    }
+    #forecast-weather-hide {
+      display: none;
+    }
+    #forecast-weather-show {
+      display: flex;
     }
 
     ._active {
