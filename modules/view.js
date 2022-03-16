@@ -1,5 +1,5 @@
-import {getCurrentWeatherData, getForecastWeatherData} from './api.js'
 import { UI, URL, FORECAST_LIST_LENGTH } from "./variables.js"
+import { getWeatherNowFromJson, getWeatherForecastFromJson } from './helper.js'
 
 function toggleTab(e) {
     e.preventDefault()
@@ -26,46 +26,41 @@ function toggleTab(e) {
     }
 }
 
-function showWeather(weather) {
+function showWeather(json) {
     console.log('Show weather')
-    const weatherData = getCurrentWeatherData(weather);
+    const weatherData = getWeatherNowFromJson(json);
 
     // NOW
-    UI.tabNowCity.innerHTML = `${weatherData.City}`
-    UI.tabNowTemp.innerHTML = `${weatherData.Temperature}&deg;C`
-    UI.tabNowIcon.style.background = `url("${URL.ICON}${weatherData.iconWeather}@2x.png") center center /contain no-repeat`
+    UI.NOW_CITY.innerHTML = `${weatherData.name}`
+    UI.NOW_TEMP.innerHTML = `${weatherData.temp}&deg;C`
+    UI.NOW_ICON.style.background = `url("${URL.ICON}${weatherData.icon}@2x.png") center center /contain no-repeat`
 
     // DETAILS
-    const ulDetailsInfo = Array.from(UI.tabDetailsInfo.children)
-    const weatherDataObject = Object.entries(weatherData)
-    ulDetailsInfo.forEach(li => {
-        weatherDataObject.map(obj => {
-            if (li.dataset.details === obj[0]) {
-                if (li.dataset.details === 'City') {
-                    li.innerHTML = `${obj[1]}`
-                }
-                if (li.dataset.details === 'Temperature' || li.dataset.details === 'Feels like') {
-                    li.innerHTML = `${obj[0]}: ${obj[1]}&deg;`
-                } else {
-                    li.innerHTML = `${obj[0]}: ${obj[1]}`
-                }
-            }
-        })
-    })
+    setDetailsWeather(json)
 
-    let cityIsSaved = checkCity(weatherData.City)
+    let cityIsSaved = checkCity(weatherData.name)
     toggleSaveBtn(cityIsSaved)
 }
 
-function showForecast(weatherData) {
+function setDetailsWeather(json) {
+    const weatherData = getWeatherNowFromJson(json)
+    UI.DETAILS_CITY.textContent = weatherData.name
+    UI.DETAILS_TEMP.innerHTML = `${UI.DETAILS_TEMP.dataset.details}: ${weatherData.temp}&deg;C`
+    UI.DETAILS_FEELS.innerHTML = `${UI.DETAILS_FEELS.dataset.details}: ${weatherData.feels}&deg;C`
+    UI.DETAILS_WEATHER.textContent = `${UI.DETAILS_WEATHER.dataset.details}: ${weatherData.main}`
+    UI.DETAILS_SUNRISE.textContent = `${UI.DETAILS_SUNRISE.dataset.details}: ${weatherData.sunrise}`
+    UI.DETAILS_SUNSET.textContent = `${UI.DETAILS_SUNSET.dataset.details}: ${weatherData.sunset}`
+}
+
+function showForecast(data) {
     console.log('Show forecast')
-    const forecastList = weatherData.list
+    const forecastList = data.list
     forecastList.length = FORECAST_LIST_LENGTH
-    UI.tabForecastCity.textContent = weatherData.city.name
+    UI.tabForecastCity.textContent = data.city.name
     UI.tabForecastContainer.innerHTML = ''
 
     forecastList.forEach(item => {
-        const forecastData = getForecastWeatherData(item)
+        const forecastData = getWeatherForecastFromJson(item)
         setW(forecastData)
     })
 }
