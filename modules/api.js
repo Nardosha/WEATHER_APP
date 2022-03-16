@@ -1,6 +1,5 @@
 import {showWeather, showForecast} from "./view.js";
 import {WEATHER_TYPE} from "./variables.js"
-import {convertToDate, convertToTime, tempConvert} from "./helper.js";
 
 function getCurrentWeather(cityName, type) {
     console.log('Load weather. Type', type)
@@ -28,63 +27,7 @@ function getUrl(city, type) {
     return `${serverUrl}${type}?q=${city}&appid=${apiKey}`
 }
 
-function getCurrentWeatherData(cityName) {
-    const tempCelc = tempConvert(cityName.main?.temp)
-    const feelsCelc = tempConvert(cityName.main?.feels_like)
-    const sunrise = convertToTime(cityName.sys?.sunrise)
-    const sunset = convertToTime(cityName.sys?.sunset)
-
-    return {
-        'City': cityName.name,
-        'Temperature': tempCelc,
-        "Feels like": feelsCelc,
-        iconWeather: cityName.weather[0].icon,
-        'Weather': cityName.weather[0].main,
-        'Sunrise': sunrise,
-        'Sunset': sunset,
-    }
-}
-
-function getForecastWeatherData(data) {
-    console.log(data)
-    let {
-        city: {
-            name,
-        },
-        list: [{
-            dt,
-            main: {
-                temp,
-                feels_like,
-            },
-            weather: [{
-                main,
-                icon,
-            }
-            ]
-        }]
-    } = data
-
-    const tempCelc = tempConvert(temp)
-    const feelsCelc = tempConvert(feels_like)
-    const day = convertToDate(dt)
-    const time = convertToTime(dt)
-
-    return {
-        'City': name,
-        'Temperature': tempCelc,
-        "Feels like": feelsCelc,
-        iconWeather: icon,
-        'Weather': main,
-        'day': day,
-        'time': time,
-    }
-}
-
 export {
     getUrl,
     getCurrentWeather,
-    getCurrentWeatherData,
-    WEATHER_TYPE,
-    getForecastWeatherData,
 }

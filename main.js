@@ -9,7 +9,7 @@ UI.tabContainer.addEventListener('click', toggleTab)
 
 UI.searchForm.onsubmit = function (e) {
     e.preventDefault()
-    const inputValue = document.querySelector('.search-block__input').value
+    let inputValue = UI.formInput.value
     const invalidCheck = /[().^+]/g
 
     if (inputValue.match(invalidCheck)) {
@@ -20,6 +20,7 @@ UI.searchForm.onsubmit = function (e) {
     const cityName = inputValue.replace(/-/g, ' ')
     getCurrentWeather(cityName, WEATHER_TYPE.currentWeather)
     getCurrentWeather(cityName, WEATHER_TYPE.forecast)
+    UI.formInput.value = ''
 
     let cityIsSaved = checkCity(cityName)
     toggleSaveBtn(cityIsSaved)
@@ -37,8 +38,8 @@ UI.cityList.addEventListener('click', (e) => {
     }
     if (e.target.classList.contains('locations-block__item-city')) {
         console.log('city', city)
-        const urlCurrentWeather = getUrl(city, WEATHER_TYPE.currentWeather)
-        getCurrentWeather(urlCurrentWeather)
+        getCurrentWeather(city, WEATHER_TYPE.currentWeather)
+        getCurrentWeather(city, WEATHER_TYPE.forecast)
     }
 })
 function getDefaultCityWeather() {
