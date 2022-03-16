@@ -27,7 +27,6 @@ function toggleTab(e) {
 }
 
 function showWeather(json) {
-    console.log('Show weather')
     const weatherData = getWeatherNowFromJson(json);
 
     // NOW
@@ -53,7 +52,6 @@ function setDetailsWeather(json) {
 }
 
 function showForecast(data) {
-    console.log('Show forecast')
     const forecastList = data.list
     forecastList.length = FORECAST_LIST_LENGTH
     UI.tabForecastCity.textContent = data.city.name
@@ -61,11 +59,11 @@ function showForecast(data) {
 
     forecastList.forEach(item => {
         const forecastData = getWeatherForecastFromJson(item)
-        setW(forecastData)
+        setForecastWeather(forecastData)
     })
 }
 
-function setW({day, time, temp, feels, icon, main}) {
+function setForecastWeather({day, time, temp, feels, icon, main}) {
     const forecastItemHourly = UI.tabForecastWeather.cloneNode(true);
 
     forecastItemHourly.querySelector('.forecast-weather__day-month').textContent = day
@@ -78,7 +76,7 @@ function setW({day, time, temp, feels, icon, main}) {
     UI.tabForecastContainer.append(forecastItemHourly)
 }
 
-function handlerSavingCity(city, action) {
+function handlerSavingCity(city) {
     const currentCity = UI.saveBtn.previousElementSibling.innerHTML
     let cityName = city ? city : currentCity
 

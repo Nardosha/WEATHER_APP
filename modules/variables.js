@@ -2,7 +2,6 @@ export const UI = {
     tabContainer: document.querySelector('.tabs__items'),
     tabBlockContainer: document.querySelector('.tabs__content'),
     saveBtn: document.querySelector('.tab-now_save'),
-
     cityList: document.querySelector('.locations-block__list'),
     formInput: document.querySelector('.search-block__input'),
     searchForm: document.querySelector('.search-block__form'),
