@@ -43,6 +43,10 @@ export const WEATHER_TYPE = {
 export const DEFAULT_CITY = 'Saint Petersburg'
 
 export const URL = {
+    WEATHER: {
+        SERVER_URL: 'https://api.openweathermap.org/data/2.5/',
+        API_KEY: 'e171dccc01aa15baea4f757ea9369939',
+    },
     ICON: `https://openweathermap.org/img/wn/`
 }
 

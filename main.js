@@ -1,4 +1,4 @@
-import {getUrl, getCurrentWeather } from "./modules/api.js";
+import { getCurrentWeather } from "./modules/api.js";
 import {toggleTab, handlerSavingCity, checkCity, toggleSaveBtn} from "./modules/view.js";
 import { UI, WEATHER_TYPE, DEFAULT_CITY } from "./modules/variables.js"
 
@@ -23,7 +23,7 @@ UI.searchForm.onsubmit = function (e) {
     UI.formInput.value = ''
 
     let cityIsSaved = checkCity(cityName)
-    toggleSaveBtn(cityIsSaved)
+    toggleSaveBtn(cityIsSaved, cityName)
 }
 
 UI.saveBtn.addEventListener('click', (e) => {

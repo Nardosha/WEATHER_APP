@@ -1,5 +1,5 @@
 import {showWeather, showForecast} from "./view.js";
-import {WEATHER_TYPE} from "./variables.js"
+import {WEATHER_TYPE, URL} from "./variables.js"
 
 function getCurrentWeather(cityName, type) {
     console.log('Load weather. Type', type)
@@ -22,9 +22,7 @@ function getCurrentWeather(cityName, type) {
 
 function getUrl(city, type) {
     console.log(type)
-    const serverUrl = 'https://api.openweathermap.org/data/2.5/'
-    const apiKey = '1041b355b3b6422eb66d9f5e517f7b52'
-    return `${serverUrl}${type}?q=${city}&appid=${apiKey}`
+    return `${URL.WEATHER.SERVER_URL}${type}?q=${city}&appid=${URL.WEATHER.API_KEY}`
 }
 
 export {
