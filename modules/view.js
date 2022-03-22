@@ -1,5 +1,6 @@
 import { UI, URL, FORECAST_LIST_LENGTH } from "./variables.js"
 import { getWeatherNowFromJson, getWeatherForecastFromJson } from './helper.js'
+import {removeItemFromLocalStorage, setItemToLocalStorage} from "./localStorage.js";
 
 function toggleTab(e) {
     e.preventDefault()
@@ -38,7 +39,7 @@ function showWeather(json) {
     setDetailsWeather(json)
 
     let cityIsSaved = checkCity(weatherData.name)
-    toggleSaveBtn(cityIsSaved)
+    toggleSaveBtn(cityIsSaved, weatherData.name)
 }
 
 function setDetailsWeather(json) {
@@ -89,7 +90,7 @@ function handlerSavingCity(city) {
         return
     }
     // Переключаем кнопку
-    toggleSaveBtn(!cityIsSaved)
+    toggleSaveBtn(!cityIsSaved, cityName)
 
     // Удаляем/сохраняем город в соответствии с cityIsSaved
     cityIsSaved
@@ -97,12 +98,14 @@ function handlerSavingCity(city) {
         : createCityItem(cityName)
 }
 
-function toggleSaveBtn(cityIsSaved) {
+function toggleSaveBtn(cityIsSaved, cityName) {
     console.log('SaveBtn. CityIsSaved:', cityIsSaved)
     if (cityIsSaved) {
         UI.saveBtn.classList.add('_active')
+        setItemToLocalStorage(cityName, `CITY_${cityName}`)
     } else {
         UI.saveBtn.classList.remove('_active')
+        removeItemFromLocalStorage(`CITY_${cityName}`)
     }
     console.log('SaveBtn. Active', cityIsSaved)
 }
