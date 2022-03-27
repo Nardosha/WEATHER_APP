@@ -1,9 +1,9 @@
 export function setItemToLocalStorage(key, city) {
-    localStorage.setItem(city, key)
+    localStorage.setItem(key, city)
 }
 
 export function getItemFromLocalStorage(key) {
-    localStorage.getItem(key)
+   return localStorage.getItem(key)
 }
 
 export function removeItemFromLocalStorage(key) {

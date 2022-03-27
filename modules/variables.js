@@ -51,3 +51,5 @@ export const URL = {
 }
 
 export const FORECAST_LIST_LENGTH = 8
+
+export let SAVED_CITIES = {'Moscow': 'Moscow', 'New York': 'New York', 'Saint Petersburg': 'Saint Petersburg'}

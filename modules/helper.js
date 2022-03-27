@@ -18,7 +18,6 @@ export function tempConvert(tempKelvin) {
 }
 
 export function getWeatherNowFromJson(data) {
-    console.log(data)
     let {
         name,
         main: {
