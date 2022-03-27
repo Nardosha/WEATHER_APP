@@ -1,6 +1,14 @@
-import { UI, URL, FORECAST_LIST_LENGTH } from "./variables.js"
-import { getWeatherNowFromJson, getWeatherForecastFromJson } from './helper.js'
+import {UI, URL, FORECAST_LIST_LENGTH} from "./variables.js"
+import {getWeatherNowFromJson, getWeatherForecastFromJson} from './helper.js'
 import {removeItemFromLocalStorage, setItemToLocalStorage} from "./localStorage.js";
+import {
+    checkCity,
+    toggleSaveBtn,
+    deleteCity,
+    createCityItem,
+    addCityToSavedCities,
+    getNextCity
+} from './actionHandler.js'
 
 function toggleTab(e) {
     e.preventDefault()
@@ -37,9 +45,6 @@ function showWeather(json) {
 
     // DETAILS
     setDetailsWeather(json)
-
-    let cityIsSaved = checkCity(weatherData.name)
-    toggleSaveBtn(cityIsSaved, weatherData.name)
 }
 
 function setDetailsWeather(json) {
@@ -77,59 +82,45 @@ function setForecastWeather({day, time, temp, feels, icon, main}) {
     UI.tabForecastContainer.append(forecastItemHourly)
 }
 
-function handlerSavingCity(city) {
-    const currentCity = UI.saveBtn.previousElementSibling.innerHTML
-    let cityName = city ? city : currentCity
-
-    // Проверяем наличие города в списке
+function handlerSavingCity(cityName, type) {
     const cityIsSaved = checkCity(cityName);
 
-    // Проверяем открыт ли тот город, который хотим удалить из списка
-    if (cityName !== currentCity) {
-        removeCityItem(cityName)
+    if (type === 'set') {
+        toggleSaveBtn(cityIsSaved)
+        return;
+    }
+
+    if (type === 'default') {
+        setItemToLocalStorage(cityName, cityName)
+        createCityItem(cityName)
+        toggleSaveBtn(cityIsSaved)
+        return;
+    }
+
+    if (type === 'remove') {
+        deleteCity(cityName)
+        toggleSaveBtn(!cityIsSaved)
+        getNextCity(cityName)
+        return;
+    }
+
+    if (cityName !== UI.NOW_CITY.innerHTML && cityIsSaved) {
+        deleteCity(cityName)
         return
     }
-    // Переключаем кнопку
+
     toggleSaveBtn(!cityIsSaved, cityName)
 
-    // Удаляем/сохраняем город в соответствии с cityIsSaved
-    cityIsSaved
-        ? removeCityItem(cityName)
-        : createCityItem(cityName)
-}
+    if (!cityIsSaved) {
+        createCityItem(cityName)
+        setItemToLocalStorage(cityName, cityName)
+        addCityToSavedCities(cityName)
+    }
 
-function toggleSaveBtn(cityIsSaved, cityName) {
-    console.log('SaveBtn. CityIsSaved:', cityIsSaved)
     if (cityIsSaved) {
-        UI.saveBtn.classList.add('_active')
-        setItemToLocalStorage(cityName, `CITY_${cityName}`)
-    } else {
-        UI.saveBtn.classList.remove('_active')
-        removeItemFromLocalStorage(`CITY_${cityName}`)
+        deleteCity(cityName)
+        removeItemFromLocalStorage(cityName)
     }
-    console.log('SaveBtn. Active', cityIsSaved)
-}
-
-function checkCity(cityName) {
-    if (document.getElementById(`${cityName}`)) {
-        console.log('Checking. City is saved', true)
-        return true
-    }
-    console.log('Checking. City is not saved', false)
-    return false
-}
-
-function removeCityItem(cityName) {
-    console.log('Remove city', cityName)
-    document.getElementById(`${cityName}`).remove()
-}
-
-function createCityItem(city) {
-    let currentCity = UI.hideCity.cloneNode(true)
-    currentCity.id = `${city}`
-    currentCity.querySelector('.locations-block__item-city').textContent = city
-    UI.cityList.append(currentCity)
-    console.log(currentCity)
 }
 
 export {
@@ -138,5 +129,6 @@ export {
     handlerSavingCity,
     checkCity,
     toggleSaveBtn,
-    showForecast
+    showForecast,
+    addCityToSavedCities,
 }
