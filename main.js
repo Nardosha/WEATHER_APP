@@ -1,6 +1,6 @@
-import {getCurrentWeather} from "./modules/api.js";
+import {getWeather} from "./modules/api.js";
 import {toggleTab, handlerSavingCity} from "./modules/view.js";
-import {UI, WEATHER_TYPE, DEFAULT_CITY, SAVED_CITIES} from "./modules/variables.js"
+import {UI, DEFAULT_CITY, SAVED_CITIES} from "./modules/variables.js"
 
 getDefaultCityWeather()
 
@@ -8,7 +8,7 @@ UI.tabContainer.addEventListener('click', toggleTab)
 
 UI.searchForm.onsubmit = function (e) {
     const cityName = getValueFromInput(e)
-    handlerSavingCity(cityName, 'set')
+    handlerSavingCity(cityName, 'toggle')
 }
 
 UI.saveBtn.addEventListener('click', (e) => {
@@ -23,9 +23,8 @@ UI.cityList.addEventListener('click', (e) => {
         handlerSavingCity(city, 'remove')
     }
     if (e.target.classList.contains('locations-block__item-city')) {
-        getCurrentWeather(city, WEATHER_TYPE.currentWeather)
-        getCurrentWeather(city, WEATHER_TYPE.forecast)
-        handlerSavingCity(city, 'set')
+        getWeather(city)
+        handlerSavingCity(city, 'toggle')
     }
 })
 
@@ -40,8 +39,7 @@ function getValueFromInput(e) {
     }
 
     const cityName = inputValue.replace(/-/g, ' ')
-    getCurrentWeather(cityName, WEATHER_TYPE.currentWeather)
-    getCurrentWeather(cityName, WEATHER_TYPE.forecast)
+    getWeather(cityName)
     UI.formInput.value = ''
     return cityName
 }
@@ -50,25 +48,20 @@ function getDefaultCityWeather() {
     let citiesFromLocalStorage = Object.keys(localStorage)
 
     if (!citiesFromLocalStorage.length) {
-        getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.currentWeather)
-        getCurrentWeather(DEFAULT_CITY, WEATHER_TYPE.forecast)
+        getWeather(DEFAULT_CITY)
 
-        for (let city in SAVED_CITIES) {
+        for (let city of SAVED_CITIES.keys()) {
             handlerSavingCity(city, 'default')
         }
         return
     }
+    getWeather(citiesFromLocalStorage[0])
 
-    getCurrentWeather(citiesFromLocalStorage[0], WEATHER_TYPE.currentWeather)
-    getCurrentWeather(citiesFromLocalStorage[0], WEATHER_TYPE.forecast)
+    SAVED_CITIES.clear()
 
-    for (let savedCity in SAVED_CITIES) {
-        delete SAVED_CITIES[savedCity]
-    }
-
-    citiesFromLocalStorage.forEach(item => {
-        SAVED_CITIES[item] = item
-        handlerSavingCity(item, 'default')
+    citiesFromLocalStorage.forEach(city => {
+        SAVED_CITIES.set(city, city)
+        handlerSavingCity(city, 'default')
     })
 }
 

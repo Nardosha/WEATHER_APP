@@ -85,7 +85,7 @@ function setForecastWeather({day, time, temp, feels, icon, main}) {
 function handlerSavingCity(cityName, type) {
     const cityIsSaved = checkCity(cityName);
 
-    if (type === 'set') {
+    if (type === 'toggle') {
         toggleSaveBtn(cityIsSaved)
         return;
     }
