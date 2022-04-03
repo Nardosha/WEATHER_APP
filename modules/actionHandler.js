@@ -1,13 +1,13 @@
 import {SAVED_CITIES, UI, WEATHER_TYPE} from "./variables.js";
 import {removeItemFromLocalStorage, setItemToLocalStorage} from "./localStorage.js";
-import {getCurrentWeather} from "./api.js";
+import {getWeather} from "./api.js";
 import {handlerSavingCity} from "./view.js";
 
 function checkCity(cityName) {
-    return SAVED_CITIES.hasOwnProperty(cityName);
+    return SAVED_CITIES.has(cityName)
 }
 
-function toggleSaveBtn(cityIsSaved, cityName) {
+function toggleSaveBtn(cityIsSaved) {
     if (cityIsSaved) {
         UI.saveBtn.classList.add('_active')
         return true
@@ -19,7 +19,7 @@ function toggleSaveBtn(cityIsSaved, cityName) {
 
 function deleteCity(cityName) {
     document.getElementById(`${cityName}`).remove()
-    delete SAVED_CITIES[cityName]
+    SAVED_CITIES.delete(cityName)
     removeItemFromLocalStorage(cityName)
 }
 
@@ -31,17 +31,17 @@ function createCityItem(cityName) {
 }
 
 function addCityToSavedCities(cityName) {
-    SAVED_CITIES[cityName] = cityName
+    SAVED_CITIES.set(cityName, cityName)
     setItemToLocalStorage(cityName, cityName)
 }
 
 function getNextCity() {
-    if (!Object.keys(SAVED_CITIES).length) return
+    if (!SAVED_CITIES.size) return
 
     const nextCity = document.querySelector('.locations-block__item').nextElementSibling.id
-    getCurrentWeather(nextCity, WEATHER_TYPE.currentWeather)
-    getCurrentWeather(nextCity, WEATHER_TYPE.forecast)
-    handlerSavingCity(nextCity, 'set')
+    getWeather(nextCity, WEATHER_TYPE.currentWeather)
+    getWeather(nextCity, WEATHER_TYPE.forecast)
+    handlerSavingCity(nextCity, 'toggle')
 }
 
 export {

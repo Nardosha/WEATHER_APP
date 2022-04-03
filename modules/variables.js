@@ -52,4 +52,5 @@ export const URL = {
 
 export const FORECAST_LIST_LENGTH = 8
 
-export let SAVED_CITIES = {'Moscow': 'Moscow', 'New York': 'New York', 'Saint Petersburg': 'Saint Petersburg'}
+export const DEFAULT_CITIES = [['Moscow', 'Moscow'], ['New York', 'New York'], ['Saint Petersburg', 'Saint Petersburg']]
+export let SAVED_CITIES = new Map(DEFAULT_CITIES)
